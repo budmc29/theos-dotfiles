@@ -2,7 +2,7 @@ export ZSH=~/.oh-my-zsh
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:$path"
 
 export TERM=xterm-256color
-ZSH_THEME="robbyrussell"
+ZSH_THEME="daveverwer"
 
 plugins=(fast-syntax-highlighting)
 
@@ -53,3 +53,13 @@ if [[ -z "$TMUX" ]] ;then
 fi
 
 set -o vi
+export PATH="$HOME/.local/bin:$PATH"
+
+# bun completions
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# NODE_AUTH_TOKEN is set in .npmrc or environment - not stored here

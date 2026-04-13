@@ -110,3 +110,13 @@ alias catless="catless $@"
 alias dotbackup="~/projects/dotter/dotter.bash -b"
 
 alias hag="history | grep"
+
+# Lendable
+
+alias aws_sso="aws sso login --profile=uk-plat-dev"
+alias aws_login='aws ecr get-login-password --region eu-west-1 --profile uk-plat-dev | docker login --username AWS --password-stdin "${AWS_ACCOUNT_ID}.dkr.ecr.eu-west-1.amazonaws.com"'
+
+# Claude
+alias claude_full="claude --dangerously-skip-permissions"
+alias cf="claude --dangerously-skip-permissions"
+alias cbrain="cd ~/.claude/cto-brain && claude_full"
