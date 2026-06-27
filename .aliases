@@ -112,11 +112,42 @@ alias dotbackup="~/projects/dotter/dotter.bash -b"
 alias hag="history | grep"
 
 # Lendable
-
+# AWS_ACCOUNT_ID is set in ~/.secrets (gitignored) or defaults from .zshrc
 alias aws_sso="aws sso login --profile=uk-plat-dev"
-alias aws_login='aws ecr get-login-password --region eu-west-1 --profile uk-plat-dev | docker login --username AWS --password-stdin "${AWS_ACCOUNT_ID}.dkr.ecr.eu-west-1.amazonaws.com"'
+alias aws_login="aws ecr get-login-password --region eu-west-1 --profile uk-plat-dev | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.eu-west-1.amazonaws.com"
 
-# Claude
+# Claude (default model set centrally by the claude() wrapper in ~/.zshrc -> Opus 4.8, 1M context)
 alias claude_full="claude --dangerously-skip-permissions"
 alias cf="claude --dangerously-skip-permissions"
-alias cbrain="cd ~/.claude/cto-brain && claude_full"
+alias cbrain="cd ~/work/cto-brain && claude_full"
+# Like cbrain but with max thinking time. Opus 4.8 (1M) comes from the claude() wrapper;
+# we only add --effort max here (passing --model would override the wrapper and lose 1M).
+alias maxbrain="cd ~/work/cto-brain && claude --effort max --dangerously-skip-permissions"
+# Like maxbrain but with xhigh thinking effort instead of max. Opus 4.8 (1M) from the wrapper; only add --effort.
+alias highbrain="cd ~/work/cto-brain && claude --effort xhigh --dangerously-skip-permissions"
+alias cag="cd ~/work/claude-agent && claude_full"
+alias cpf="cd ~/work/central-platform && claude_full"
+# central-development (the Pit dashboard, private budmc29/central-development repo).
+# Opus 4.8 (1M) comes from the claude() wrapper; --effort medium gives standard thinking
+# (overrides the high default in settings.json). Don't add --model or you lose the 1M context.
+alias cdev="cd ~/work/central-development && claude --effort medium --dangerously-skip-permissions"
+# Like cdev but with max thinking time (mirrors maxbrain). Opus 4.8 (1M) from the wrapper; only add --effort.
+alias cdev-max="cd ~/work/central-development && claude --effort max --dangerously-skip-permissions"
+alias cag="claude agents --dangerously-skip-permissions"
+
+# mission-control. mcdev mirrors highbrain (xhigh thinking). Opus 4.8 (1M) comes from
+# the claude() wrapper; only add --effort (passing --model would override the wrapper and lose 1M).
+alias mcdev="cd ~/work/mission-control && claude --effort xhigh --dangerously-skip-permissions"
+# Like mcdev but with max thinking time (mirrors maxbrain). Opus 4.8 (1M) from the wrapper; only add --effort.
+alias mcmax="cd ~/work/mission-control && claude --effort max --dangerously-skip-permissions"
+# Like mcdev but fast: Sonnet 4.6 + medium thinking. --model sonnet intentionally overrides the
+# wrapper's Opus 4.8 (1M) here, so this one trades the 1M context for speed.
+alias mcfast="cd ~/work/mission-control && claude --model sonnet --effort medium --dangerously-skip-permissions"
+
+# Secretary: cto-brain orchestrator, runs cheap/fast (Sonnet + low effort)
+alias secretary="cd ~/work/cto-brain && claude --model sonnet --effort low --dangerously-skip-permissions"
+alias secretary-opus="cd ~/work/cto-brain && claude --model opus --effort high --dangerously-skip-permissions"
+
+alias cdx="codex --yolo"
+alias cdx-brain="cd ~/work/cto-brain && codex --yolo"
+alias cpfx="cd ~/work/central-platform && codex --yolo"

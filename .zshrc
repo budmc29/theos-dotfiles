@@ -47,19 +47,53 @@ export PATH="/usr/local/opt/imagemagick@6/bin:$PATH"
 
 export PATH=$HOME/bin:$PATH
 
-# Start new tmux session when opening a new console
+# Attach to existing tmux session or create a new one
 if [[ -z "$TMUX" ]] ;then
-  tmux new-session
+  tmux attach-session 2>/dev/null || tmux new-session
 fi
 
 set -o vi
 export PATH="$HOME/.local/bin:$PATH"
 
 # bun completions
-[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+[ -s "/Users/mugurel-teodor.chirica/.bun/_bun" ] && source "/Users/mugurel-teodor.chirica/.bun/_bun"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
-# NODE_AUTH_TOKEN is set in .npmrc or environment - not stored here
+# NODE_AUTH_TOKEN is loaded from ~/.secrets (gitignored) — never store inline
+export NODE_AUTH_TOKEN=${NODE_AUTH_TOKEN:-}
+
+# Lendable
+export AWS_ACCOUNT_ID=${AWS_ACCOUNT_ID:-117771453557}
+
+# Load secrets (gitignored) — override any defaults above
+[ -f "$HOME/.secrets" ] && source "$HOME/.secrets"
+
+# Added by git-ai installer on Thu Apr 16 19:40:49 BST 2026
+export PATH="/Users/mugurel-teodor.chirica/.git-ai/bin:$PATH"
+
+. "$HOME/.local/bin/env"
+
+# uv completions
+eval "$(uv generate-shell-completion zsh)"
+eval "$(uvx --generate-shell-completion zsh)"
+
+# fnm
+FNM_PATH="/Users/mugurel-teodor.chirica/Library/Application Support/fnm"
+if [ -d "$FNM_PATH" ]; then
+  export PATH="$FNM_PATH:$PATH"
+  eval "$(fnm env --shell zsh)"
+fi
+source ~/.safe-chain/scripts/init-posix.sh # Safe-chain Zsh initialization script
+
+# Generated for envman. Do not edit.
+[ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
+
+# Default Claude Code to Opus 4.8 (1M context). The org-managed policy cached at
+# ~/.claude/remote-settings.json otherwise resets the model to Sonnet 4.6 on every
+# launch; this --model override beats it. Override per run with e.g.
+# `claude --model sonnet` (the last --model on the line wins). Bypass with `command claude`.
+# Effort/thinking is set separately in ~/.claude/settings.json (effortLevel: xhigh).
+claude() { command claude --model 'claude-opus-4-8[1m]' "$@"; }
