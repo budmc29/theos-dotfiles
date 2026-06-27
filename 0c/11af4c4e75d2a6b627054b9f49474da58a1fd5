@@ -1,0 +1,25 @@
+.aliases
+  s_77edf610ae0d96::t_66027f3b6b22f6 115,117,119,122-153
+.gitignore
+  s_77edf610ae0d96::t_1c472887b48975 1-6
+.secrets.example
+  s_77edf610ae0d96::t_b868dc7a229d32 1-10
+.zshrc
+  s_77edf610ae0d96::t_f3e52cdf6c5fc6 50,52,59,65-99
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.3",
+  "base_commit_sha": "0c11af4c4e75d2a6b627054b9f49474da58a1fd5",
+  "prompts": {},
+  "sessions": {
+    "s_77edf610ae0d96": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "197a0b01-fc0c-43da-8148-8cb02d3ae449",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Theo Chirica <theo.chirica@lendable.co.uk>"
+    }
+  }
+}
