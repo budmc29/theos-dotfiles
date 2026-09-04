@@ -47,9 +47,9 @@ export PATH="/usr/local/opt/imagemagick@6/bin:$PATH"
 
 export PATH=$HOME/bin:$PATH
 
-# Attach to existing tmux session or create a new one
-if [[ -z "$TMUX" ]] ;then
-  tmux attach-session 2>/dev/null || tmux new-session
+# Keep tmux scoped to Ghostty. Orca and other terminals get independent shells.
+if [[ "$TERM_PROGRAM" == "ghostty" && -z "$TMUX" ]] && command -v tmux >/dev/null 2>&1; then
+  tmux new-session -A -s ghostty
 fi
 
 set -o vi
